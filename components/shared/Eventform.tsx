@@ -26,30 +26,86 @@ import Image from "next/image"
 import DatePicker from "react-datepicker";
 import { Checkbox } from "../ui/checkbox"
 import "react-datepicker/dist/react-datepicker.css";
+import CreateEvent from "@/app/(root)/events/create/page"
+import { useRouter } from "next/navigation"
+import { useUploadThing } from "@/lib/uploadthing"
+import { createEvent } from "@/lib/actions/event.action"
+import { IEvent } from "@/lib/database/models/event.model"
 
 
-type EventProps = {
-  userId:string
-  type : "Create" | "Update"
+type EventFormProps = {
+  userId: string
+  type: "Create" | "Update"
+  event?: IEvent,
+  eventId?: string
 }
 
-const Eventform = ({userId, type}:EventProps) => {
+const Eventform = ({userId, type}:EventFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
   const initialValues = eventDefaultValues ;
+
+  const { startUpload } = useUploadThing('imageUploader')
+  const router = useRouter();
 
   const form = useForm<z.infer<typeof eventFormSchema>>({
     resolver: zodResolver(eventFormSchema),
     defaultValues: initialValues
   })
  
-  // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof eventFormSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values)
-  }
-  return (
+  async function onSubmit(values: z.infer<typeof eventFormSchema>) {
+    let uploadedImageUrl = values.imageUrl;
 
+    if(files.length > 0) {
+      const uploadedImages = await startUpload(files)
+
+      if(!uploadedImages) {
+        return
+      }
+
+      uploadedImageUrl = uploadedImages[0].url
+    }
+
+    if(type === 'Create') {
+      try {
+        const newEvent = await createEvent({
+          event: { ...values, imageUrl: uploadedImageUrl },
+          userId,
+          path: '/profile'
+        })
+
+        if(newEvent) {
+          form.reset();
+          router.push(`/events/${newEvent._id}`)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    // if(type === 'Update') {
+    //   if(!eventId) {
+    //     router.back()
+    //     return;
+    //   }
+
+    //   try {
+    //     const updatedEvent = await updateEvent({
+    //       userId,
+    //       event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
+    //       path: `/events/${eventId}`
+    //     })
+
+    //     if(updatedEvent) {
+    //       form.reset();
+    //       router.push(`/events/${updatedEvent._id}`)
+    //     }
+    //   } catch (error) {
+    //     console.log(error);
+    //   }
+    // }
+  }
+
+  return (
     <div className="pl-2">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
