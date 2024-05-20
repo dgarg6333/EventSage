@@ -118,14 +118,13 @@ const Eventform = ({userId, type}:EventProps) => {
               render={({ field }) => (
                 <FormItem className="w-full">
                   <FormControl>
-                    <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-grey-50 px-4 py-2">
+                    <div className="flex-center h-[54px] w-full overflow-hidden rounded-full bg-gray-100 px-4 py-2">
                       <Image
                         src="/assets/icons/location-grey.svg"
                         alt="calendar"
                         width={24}
                         height={24}
                       />
-
                       <Input placeholder="Event location or Online" {...field} className="input-field" />
                     </div>
 
