@@ -44,20 +44,20 @@ export async function createEvent({ userId, event, path }: CreateEventParams) {
   }
 }
 
-// // GET ONE EVENT BY ID
-// export async function getEventById(eventId: string) {
-//   try {
-//     await connectToDatabase()
+// GET ONE EVENT BY ID
+export async function getEventById(eventId: string) {
+  try {
+    await connectToDatabase()
 
-//     const event = await populateEvent(Event.findById(eventId))
+    const event = await populateEvent(Event.findById(eventId))
 
-//     if (!event) throw new Error('Event not found')
+    if (!event) throw new Error('Event not found')
 
-//     return JSON.parse(JSON.stringify(event))
-//   } catch (error) {
-//     handleError(error)
-//   }
-// }
+    return JSON.parse(JSON.stringify(event))
+  } catch (error) {
+    handleError(error)
+  }
+}
 
 // // UPDATE
 // export async function updateEvent({ userId, event, path }: UpdateEventParams) {
