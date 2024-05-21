@@ -5,6 +5,7 @@ import Collection from '@/components/shared/Collection';
 import { getAllEvents } from '@/lib/actions/event.action';
 import Search from '@/components/shared/Search';
 import { SearchParamProps } from '@/types';
+import CategoryFilter from '@/components/shared/CategoryFilter';
 
 export default async function Home({ searchParams }: SearchParamProps) {
   const page = Number(searchParams?.page) || 1;
@@ -13,8 +14,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
 
   const events = await getAllEvents({
     query: searchText,
-    category:'',
-    page:1,
+    category,
+    page,
     limit: 6
   })
 
@@ -47,7 +48,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
   
           <div className="flex w-full flex-col gap-5 md:flex-row">
             <Search />
-            {/* <CategoryFilter /> */}
+            <CategoryFilter />
           </div>
   
           <Collection 
@@ -57,7 +58,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
             collectionType="All_Events"
             limit={6}
             page={1}
-            totalPages={2}
+            totalPages={events?.totalPages}
           />
         </section>
       </>
