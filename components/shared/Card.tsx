@@ -4,7 +4,7 @@ import { auth } from '@clerk/nextjs/server'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-// import { DeleteConfirmation } from './DeleteConfirmation'
+import { DeleteConfirmation } from './DeleteConfirmation'
 
 type CardProps = {
   event: IEvent,
@@ -12,12 +12,11 @@ type CardProps = {
   hidePrice?: boolean
 }
 
-const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
-//   const { sessionClaims } = auth();
-//   const userId = sessionClaims?.userId as string; 
-  const { userId } : { userId: string | null } = auth();
+const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => { 
+  const { sessionClaims } = auth();
+  const userId = sessionClaims?.userId as string;
 
-  const isEventCreator = userId === event.organizer._id.toString();
+  const isEventCreator = userId === event.organizer._id.toString();;
 
   return (
     <div className="group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-xl bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]">
@@ -34,7 +33,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             <Image src="/assets/icons/edit.svg" alt="edit" width={20} height={20} />
           </Link>
 
-          {/* <DeleteConfirmation eventId={event._id} /> */}
+          <DeleteConfirmation eventId={event._id} />
         </div>
       )}
 

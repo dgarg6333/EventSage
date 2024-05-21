@@ -82,17 +82,17 @@ export async function getEventById(eventId: string) {
 //   }
 // }
 
-// // DELETE
-// export async function deleteEvent({ eventId, path }: DeleteEventParams) {
-//   try {
-//     await connectToDatabase()
+// DELETE
+export async function deleteEvent({ eventId, path }: DeleteEventParams) {
+  try {
+    await connectToDatabase()
 
-//     const deletedEvent = await Event.findByIdAndDelete(eventId)
-//     if (deletedEvent) revalidatePath(path)
-//   } catch (error) {
-//     handleError(error)
-//   }
-// }
+    const deletedEvent = await Event.findByIdAndDelete(eventId)
+    if (deletedEvent) revalidatePath(path)
+  } catch (error) {
+    handleError(error)
+  }
+}
 
 // GET ALL EVENTS
 export async function getAllEvents({ query, limit = 6, page, category }: GetAllEventsParams) {
