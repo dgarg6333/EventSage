@@ -8,6 +8,12 @@ import Image from 'next/image';
 const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
   const event = await getEventById(id);
 
+  // const relatedEvents = await getRelatedEventsByCategory({
+  //   categoryId: event.category._id,
+  //   eventId: event._id,
+  //   page: searchParams.page as string,
+  // })
+
   return (
     <>
     <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain pl-2">
@@ -81,13 +87,13 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
       <h2 className="h2-bold pl-2">Related Events</h2>
 
       <Collection 
-          // data={relatedEvents?.data}
-          // emptyTitle="No Events Found"
-          // emptyStateSubtext="Come back later"
-          // collectionType="All_Events"
-          // limit={3}
-          // page={searchParams.page as string}
-          // totalPages={relatedEvents?.totalPages}
+        data={event}
+        emptyTitle="No Events Found"
+        emptyStateSubtext="Come back later"
+        collectionType="All_Events"
+        limit={3}
+        page={searchParams.page as string}
+        totalPages={2}
       />
     </section>
     </>
