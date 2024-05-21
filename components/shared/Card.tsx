@@ -23,7 +23,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
       <Link 
         href={`/events/${event._id}`}
         style={{backgroundImage: `url(${event.imageUrl})`}}
-        className="flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500"
+        className="flex-center flex-grow bg-gray-100 bg-cover bg-center text-gray-500"
       />
       {/* IS EVENT CREATOR ... */}
 
