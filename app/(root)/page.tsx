@@ -3,14 +3,16 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import Collection from '@/components/shared/Collection';
 import { getAllEvents } from '@/lib/actions/event.action';
+import Search from '@/components/shared/Search';
+import { SearchParamProps } from '@/types';
 
-export default async function Home() {
-  // const page = Number(searchParams?.page) || 1;
-  // const searchText = (searchParams?.query as string) || '';
-  // const category = (searchParams?.category as string) || '';
+export default async function Home({ searchParams }: SearchParamProps) {
+  const page = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || '';
+  const category = (searchParams?.category as string) || '';
 
   const events = await getAllEvents({
-    query: '',
+    query: searchText,
     category:'',
     page:1,
     limit: 6
@@ -44,8 +46,8 @@ export default async function Home() {
           <h2 className="h2-bold pl-2">Experience the New Standard with Our Platform!</h2>
   
           <div className="flex w-full flex-col gap-5 md:flex-row">
-            {/* <Search />
-            <CategoryFilter /> */}
+            <Search />
+            {/* <CategoryFilter /> */}
           </div>
   
           <Collection 
