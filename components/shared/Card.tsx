@@ -44,12 +44,12 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           <span className="p-semibold-14 w-min rounded-full bg-green-100 px-4 py-1 text-green-60">
             {event.isFree ? 'FREE' : `$${event.price}`}
           </span>
-          <p className="p-semibold-14 w-min rounded-full bg-grey-500/10 px-4 py-1 text-grey-500 line-clamp-1">
+          <p className="p-semibold-14 w-min rounded-full bg-gray-500/10 px-4 py-1 text-gray-500 line-clamp-1">
             {event.category.name}
           </p>
         </div>}
 
-        <p className="p-medium-16 p-medium-18 text-grey-500">
+        <p className="p-medium-16 p-medium-18 text-gray-500">
           {formatDateTime(event.startDateTime).dateTime}
         </p>
 
@@ -58,7 +58,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         </Link>
 
         <div className="flex-between w-full">
-          <p className="p-medium-14 md:p-medium-16 text-grey-600">
+          <p className="p-medium-14 md:p-medium-16 text-gray-600">
             {event.organizer.firstName} {event.organizer.lastName}
           </p>
 

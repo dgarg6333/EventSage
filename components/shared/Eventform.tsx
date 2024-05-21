@@ -29,7 +29,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import CreateEvent from "@/app/(root)/events/create/page"
 import { useRouter } from "next/navigation"
 import { useUploadThing } from "@/lib/uploadthing"
-import { createEvent } from "@/lib/actions/event.action"
+import { createEvent, updateEvent } from "@/lib/actions/event.action"
 import { IEvent } from "@/lib/database/models/event.model"
 
 
@@ -40,9 +40,15 @@ type EventFormProps = {
   eventId?: string
 }
 
-const Eventform = ({userId, type}:EventFormProps) => {
+const Eventform = ({userId, type, event, eventId}:EventFormProps) => {
   const [files, setFiles] = useState<File[]>([]);
-  const initialValues = eventDefaultValues ;
+  const initialValues = event && type === 'Update' 
+    ? { 
+      ...event, 
+      startDateTime: new Date(event.startDateTime), 
+      endDateTime: new Date(event.endDateTime) 
+    }
+    : eventDefaultValues;
 
   const { startUpload } = useUploadThing('imageUploader')
   const router = useRouter();
@@ -82,27 +88,27 @@ const Eventform = ({userId, type}:EventFormProps) => {
       }
     }
 
-    // if(type === 'Update') {
-    //   if(!eventId) {
-    //     router.back()
-    //     return;
-    //   }
+    if(type === 'Update') {
+      if(!eventId) {
+        router.back()
+        return;
+      }
 
-    //   try {
-    //     const updatedEvent = await updateEvent({
-    //       userId,
-    //       event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
-    //       path: `/events/${eventId}`
-    //     })
+      try {
+        const updatedEvent = await updateEvent({
+          userId,
+          event: { ...values, imageUrl: uploadedImageUrl, _id: eventId },
+          path: `/events/${eventId}`
+        })
 
-    //     if(updatedEvent) {
-    //       form.reset();
-    //       router.push(`/events/${updatedEvent._id}`)
-    //     }
-    //   } catch (error) {
-    //     console.log(error);
-    //   }
-    // }
+        if(updatedEvent) {
+          form.reset();
+          router.push(`/events/${updatedEvent._id}`)
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
   }
 
   return (

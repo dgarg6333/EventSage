@@ -16,7 +16,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
   return (
     <>
-    <section className="flex justify-center bg-primary-50 bg-dotted-pattern bg-contain pl-2">
+    <section className="flex justify-center bg-gray-50 bg-dotted-pattern bg-contain pl-2">
       <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-7xl">
         <Image 
           src={event.imageUrl}
@@ -35,7 +35,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
                 <p className="p-bold-20 rounded-full bg-green-500/10 px-5 py-2 text-green-700">
                   {event.isFree ? 'FREE' : `$${event.price}`}
                 </p>
-                <p className="p-medium-16 rounded-full bg-grey-500/10 px-4 py-2.5 text-grey-500">
+                <p className="p-medium-16 rounded-full bg-gray-500/10 px-4 py-2.5 text-gray-500">
                   {event.category.name}
                 </p>
               </div>
@@ -71,11 +71,11 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
           </div>
 
           <div className="flex flex-col gap-2">
-            <p className="p-bold-20 text-grey-600">What You'll Learn:</p>
+            <p className="p-bold-20 text-gray-600">What You'll Learn:</p>
             <p className="p-medium-16 lg:p-regular-18">{event.description}</p>
             <div className='flex flex-row gap-2'>
               <p className='p-medium-16 lg:p-regular-18'>URL: </p>
-              <p className="p-medium-16 lg:p-regular-18 truncate text-primary-500 underline"> {event.url}</p>
+              <p className="p-medium-16 lg:p-regular-18 truncate text-gray-500 underline"> {event.url}</p>
             </div>
           </div>
         </div>
